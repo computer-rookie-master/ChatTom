@@ -2,21 +2,24 @@
 <view class="page" >
     <image class="bg-image" style="opacity:{{0.68}}" mode="scaleToFill" src="/images/bg.jpg"></image>
     <view class="data">
-        <view class="user_register_data" >用户注册信息</view>
-        <view class="table">
-            <view class="flex-cell flex-row">
-                <text class="flex-cell flex-row">姓名</text>
-                <text class="flex-cell flex-row">{{user.name}}</text>
-            </view>
-            <view class="flex-cell flex-row">
-                <text class="flex-cell flex-row">性别</text>
-                <text class="flex-cell flex-row">{{user.sex}}</text>
-            </view>
-            <view class="flex-row flex-cell">
-                <text class="flex-cell flex-row">年龄</text>
-                <text class="flex-cell flex-row">{{user.age}}</text>
-            </view>
+        <view class="head flot">
+            <image class="bg-image2" style="opacity:{{0.33}}" mode="scaleToFill" src="/images/bg2.jpg"></image>
+            <open-data type="userAvatarUrl"></open-data>
         </view>
-        <button class="check" bindtap="gotologin">确认</button>
+        <view class="table">
+            <view class="flex-row">
+                <image src="/images/name.png" class="icon"></image>
+                <text class="flex-cell">{{user.name}}</text>
+            </view>
+            <view class="flex-row">
+                <image src="/images/sex.png" class="icon"></image>
+                <text class="flex-cell">{{user.sex}}</text>
+            </view>
+            <view class="flex-row">
+                <image src="/images/age.png" class="icon"></image>
+                <text class="flex-cell ">{{user.age}}</text>
+            </view>
+        </view>   
+        <button class="check" bindtap="gotologin" type="default" plain="false">确认</button>
     </view>
 </view>

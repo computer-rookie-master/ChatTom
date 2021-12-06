@@ -1,5 +1,3 @@
-// index.js
-// 获取应用实例
 const app = getApp()
 //输入框置为空
 var inputVal = '';
@@ -17,11 +15,7 @@ function initDate(that){
   inputVal = ''
   msgList = [{
     speaker: 'chatTom',
-    msg: '恭喜EDG夺得2021年全球总决赛冠军！'
-  },
-  {
-    speaker: 'customer',
-    msg: 'EDG牛逼！'
+    msg: '您好，我是ChatTom，很开心能够跟您聊天！'
   }
 ]
   that.setData({
@@ -31,6 +25,7 @@ function initDate(that){
 }
 
 Page({
+  //初始化数据
   data: {
     scrollHeight: '100vh',
     inputBottom: 0,
@@ -47,7 +42,7 @@ Page({
       //res就是标签为input的元素的信息的数组
       //取高度
       inputheight=res[0].height;
-      console.log('input高度',inputheight)
+      //console.log('input高度',inputheight)
     })
   },
   getUserProfile(e) {
@@ -55,7 +50,7 @@ Page({
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
+        //console.log(res)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -64,14 +59,11 @@ Page({
     })
     
   },
-  getUserInfo(e) {
-    // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    
-  },
+ 
   //input获得聚焦时
   onFocus:function(e){
     keyHeight = e.detail.height;
-    console.log('聚焦高度：',inputheight)
+    //console.log('聚焦高度：',inputheight)
     this.setData({   
       scrollHeight: (windowHeight - keyHeight - inputheight) + 'px',
       inputBottom: keyHeight + 'px'
@@ -110,39 +102,54 @@ Page({
       })
       return false;
     }
-    msgList.push({
-      msg,
-      speaker: 'customer'
-     })
-    console.log('发送高度：',inputheight)
-    this.setData({
-      msgList,
-      inputVal: '',
-      scrollHeight: (windowHeight - keyHeight - inputheight) + 'px',
-      toView: 'msg' + (msgList.length - 1),
-      msg:''
-    });
-    wx.request({
-      url: 'http://127.0.0.1:8080/message/getResp',
-      data: {
-        reqMsg: 'hello'
-      },
-      header:{
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-      success(res) {
-        console.log(res.data)
-      }
-    })
+    else{
+      //console.log(msgList)
+      msgList.push({
+        msg,
+        speaker: 'customer'
+       })
+      
+      //console.log('发送高度：',inputheight)
+      //发送请求导后台，并将响应结果显示到界面上
+      wx.request({
+        url: 'https://www.edsah.cn/chattom-0.0.1-SNAPSHOT/message/getResp',
+        data: {
+          reqMsg: msg
+        },
+        header:{
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        success:(res)=> {
+          msg = res.data,
+          console.log(res.data)
+          msgList.push({
+            msg,
+            speaker:'chatTom'
+          })
+          this.setData({
+              msgList,
+              inputVal: '',
+              scrollHeight: (windowHeight - keyHeight - inputheight) + 'px',
+              toView: 'msg' + (msgList.length - 1),
+              msg:'' //防止未输入新消息仍可发送上一条消息
+          })
+        },
+      
+      })
+      //console.log(msgList)
+      
+    }
     
   },
 
+  //点击用户头像的跳转
   userinto: function(){
     wx.navigateTo({
       url: '/pages/person/person',
     })
   },
+  //点击ChatTom头像的跳转
   ChatTominto: function(){
     wx.navigateTo({
       url: '../robot/robot',

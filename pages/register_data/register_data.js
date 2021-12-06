@@ -34,7 +34,7 @@ Page({
     },
     gotologin:function(e){
       wx.request({
-        url: 'http://127.0.0.1:8080/user/register',
+        url: 'https://www.edsah.cn/chattom-0.0.1-SNAPSHOT/user/register',
         method: 'POST',
         data:{
           openid:wx.getStorageSync('openid'),
@@ -47,11 +47,12 @@ Page({
         },
         success:function(res) {
           console.log("success")
+          wx.navigateTo({
+            url: '/pages/chat/chat'
+          })
         }
       })
-      // wx.navigateTo({
-      //   url: '/pages/chat/chat'
-      // })
+      
     },
     /**
      * 生命周期函数--监听页面显示

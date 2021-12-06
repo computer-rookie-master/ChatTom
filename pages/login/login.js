@@ -18,7 +18,7 @@ Page({
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'http://127.0.0.1:8080/user/getID',
+            url: 'https://www.edsah.cn/chattom-0.0.1-SNAPSHOT/user/getID',
             data: {
               code: res.code
             },
